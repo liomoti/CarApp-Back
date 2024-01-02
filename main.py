@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from connectors.firestore_connector import get_mishna
+
 app = FastAPI()
 
 # Allow CORS for all origins to enable frontend access
@@ -19,8 +21,14 @@ class Item(BaseModel):
     model: str
     isBlack: bool
 
+get_mishna("ב","א")
+
+# ~~~~~~~~~~~~~~~ Routs ~~~~~~~~~~~~~~~
 @app.post("/items/")
 async def create_item(item: Item):
     color_item = "Black" if item.isBlack else "White"
     return f"Hello {item.name}, We received your order for {color_item} {item.model} with {item.description}."
 
+@app.post("/getmishna/")
+async def get_mishna(chapter: str, mishna: str, tags: str):
+    return get_mishna(chapter,mishna, tags)
