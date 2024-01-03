@@ -30,4 +30,4 @@ archive.zip
 .DS_Store
 
 # env files
-firebase_key/serviceAccountKey.json
+firestore_key/serviceAccountKey.json
